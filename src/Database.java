@@ -6,35 +6,39 @@ public class Database{
         {201596427, 98765, 6500},
         {201456329, 65432, 13200}
     };
-    private int currentAccount = account.length;
+    private int userAccount = account.length;
 
-    public boolean authenticateAccount(int accountNumberInput, int pinInput){        
+    public boolean authenticateAccount(int accountNumberInput, int pinInput) {
         boolean found = false;
-        for(int row = 0; row < account.length; row++){             
-            if (account[row][0] == accountNumberInput && account[row][1] == pinInput) {
-                setUserAccount(row);
-                found = true;
+        for (int row = 0; row < account.length; row++) {
+            for (int column = 0; column < account[row].length; column++) {
+                if (column == 0 && account[row][column] == accountNumberInput) {
+                    if (column + 1 < account[row].length && account[row][column + 1] == pinInput) {
+                        setUserAccount(row);
+                        found = true;
+                    }
+                }
             }
-        }return found;        
+        } return found;        
     }
 
-    public void setUserAccount(int row){
-        this.currentAccount = row;
+    public void setUserAccount(int row) {
+        this.userAccount = row;
     }
 
-    public int getUserAccount(){
-        return this.currentAccount;
+    public int getUserAccount() {
+        return this.userAccount;
     }
    
-    public void setBalance(int row, int amount){
+    public void setBalance(int row, int amount) {
         this.account[row][2] += amount;
     }
 
-    public int getBalance(int row){
+    public int getBalance(int row) {
         return this.account[row][2];
     }
 
-    public void debit(int row, int amount){
+    public void debit(int row, int amount) {
         this.account[row][2] -= amount;
     }    
 }
